@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - PBT_02</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f4efe8;
+            --card: #fffdf9;
+            --ink: #1f2937;
+            --muted: #6b7280;
+            --line: #d6cbbc;
+            --accent: #b45309;
+            --accent-2: #0f766e;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            background:
+                radial-gradient(circle at top left, rgba(180, 83, 9, 0.14), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(15, 118, 110, 0.14), transparent 35%),
+                var(--bg);
+            color: var(--ink);
+        }
+
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 32px 20px 56px;
+        }
+
+        .hero {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+
+        .hero p {
+            margin: 0;
+            max-width: 70ch;
+            color: var(--muted);
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            display: grid;
+            gap: 18px;
+        }
+
+        fieldset {
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 18px;
+            background: rgba(255, 253, 249, 0.94);
+            box-shadow: 0 18px 40px rgba(31, 41, 55, 0.08);
+        }
+
+        legend {
+            padding: 0 8px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .field {
+            display: grid;
+            gap: 7px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: 700;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid #cbbfb0;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font: inherit;
+            background: #fff;
+            color: var(--ink);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .radio-group,
+        .checkbox-row {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border: 1px solid #ded4c7;
+            border-radius: 999px;
+            background: #fff;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: 0;
+            border-radius: 999px;
+            padding: 13px 20px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .submit {
+            background: linear-gradient(135deg, var(--accent), #d97706);
+            color: white;
+        }
+
+        .reset {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        .hint {
+            font-size: 0.92rem;
+            color: var(--muted);
+            margin: -2px 0 0;
+            font-family: Arial, sans-serif;
+        }
+
+        @media (max-width: 720px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header class="hero">
+            <h1>Form đăng ký tài khoản</h1>
+            <p>Trang này đáp ứng yêu cầu Bài B1: đầy đủ fieldset, label accessibility, placeholder cho các input text, và validation HTML5 cơ bản cho e-commerce.</p>
+        </header>
+
+        <form action="#" method="POST" id="registerForm">
+            <fieldset>
+                <legend>Thông tin cá nhân</legend>
+                <div class="grid">
+                    <div class="field full">
+                        <label for="fullname">Họ tên</label>
+                        <input type="text" id="fullname" name="fullname" required minlength="2" maxlength="50" placeholder="Nguyễn Văn Minh" autocomplete="name">
+                    </div>
+
+                    <div class="field">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="you@email.com" autocomplete="email">
+                    </div>
+
+                    <div class="field">
+                        <label for="phone">Số điện thoại</label>
+                        <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" placeholder="0901234567" autocomplete="tel" title="Nhập đúng 10 chữ số">
+                    </div>
+
+                    <div class="field">
+                        <label for="dob">Ngày sinh</label>
+                        <input type="date" id="dob" name="dob" required placeholder="YYYY-MM-DD">
+                        <p class="hint">Không cho chọn ngày trong tương lai.</p>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Tài khoản</legend>
+                <div class="grid">
+                    <div class="field">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required pattern="[A-Za-z0-9_]{3,20}" minlength="3" maxlength="20" placeholder="minh_123" autocomplete="username" title="Chỉ dùng chữ cái, số và underscore, 3-20 ký tự">
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required minlength="8" pattern="(?=.*[A-Z])(?=.*[0-9]).{8,}" placeholder="Ít nhất 8 ký tự" autocomplete="new-password" title="Ít nhất 8 ký tự, gồm tối thiểu 1 chữ hoa và 1 số">
+                    </div>
+
+                    <div class="field full">
+                        <label for="confirm_password">Xác nhận password</label>
+                        <input type="password" id="confirm_password" name="confirm_password" required minlength="8" pattern="(?=.*[A-Z])(?=.*[0-9]).{8,}" placeholder="Nhập lại mật khẩu" autocomplete="new-password" title="Dùng cùng rule cơ bản với password, nhưng so khớp chính xác cần JavaScript">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Thông tin giao hàng</legend>
+                <div class="grid">
+                    <div class="field">
+                        <label for="city">Thành phố</label>
+                        <select id="city" name="city" required>
+                            <option value="">-- Chọn tỉnh/thành --</option>
+                            <option value="hanoi">Hà Nội</option>
+                            <option value="hcm">TP.HCM</option>
+                            <option value="danang">Đà Nẵng</option>
+                            <option value="cantho">Cần Thơ</option>
+                            <option value="haiphong">Hải Phòng</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="district">Quận/Huyện</label>
+                        <select id="district" name="district" required>
+                            <option value="">-- Chọn quận/huyện --</option>
+                            <option value="district-1">Quận 1</option>
+                            <option value="district-3">Quận 3</option>
+                            <option value="binhthanh">Bình Thạnh</option>
+                            <option value="caugiay">Cầu Giấy</option>
+                            <option value="tayho">Tây Hồ</option>
+                        </select>
+                    </div>
+
+                    <div class="field full">
+                        <label for="address">Địa chỉ chi tiết</label>
+                        <textarea id="address" name="address" rows="3" required placeholder="Số nhà, đường, phường/xã, quận/huyện..."></textarea>
+                    </div>
+
+                    <div class="field full">
+                        <label>Giới tính</label>
+                        <div class="radio-group" role="radiogroup" aria-label="Giới tính">
+                            <label class="radio-option" for="gender-male"><input type="radio" id="gender-male" name="gender" value="male" required> Nam</label>
+                            <label class="radio-option" for="gender-female"><input type="radio" id="gender-female" name="gender" value="female"> Nữ</label>
+                            <label class="radio-option" for="gender-other"><input type="radio" id="gender-other" name="gender" value="other"> Khác</label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Điều khoản</legend>
+                <label class="checkbox-option" for="agree">
+                    <input type="checkbox" id="agree" name="agree" required>
+                    Tôi đồng ý điều khoản sử dụng
+                </label>
+            </fieldset>
+
+            <div class="actions">
+                <button class="submit" type="submit">Đăng ký</button>
+                <button class="reset" type="reset">Reset</button>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        const dob = document.getElementById('dob');
+        const today = new Date();
+        const formattedToday = today.toISOString().split('T')[0];
+        dob.max = formattedToday;
+    </script>
+</body>
+</html>
